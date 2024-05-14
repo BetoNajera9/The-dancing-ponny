@@ -1,9 +1,17 @@
-import http from "http";
+import http from 'http'
 
-const server = http.createServer((req: http.IncomingMessage, res: http.ServerResponse) => {
+import { handlerRequest } from './core/http'
+import { Logger } from './common/utils'
+import { envs } from './config'
 
-});
+const logger = new Logger('AppService')
 
-server.listen(3000, () => {
-  console.log(`Server is running on port 3000`);
-});
+const server = http.createServer(
+	(req: http.IncomingMessage, res: http.ServerResponse) => {
+		handlerRequest(req, res)
+	}
+)
+
+server.listen(envs.port, () => {
+	logger.log(`Server is running on port ${envs.port}`)
+})
