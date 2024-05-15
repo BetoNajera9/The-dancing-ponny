@@ -15,11 +15,29 @@ interface EnvVars {
    * @example http://localhost:3000
    */
   SERVER: string
+
+  /**
+   * Url of the database the service will connect to
+   *
+   * @example mongodb+srv://root:<password>@cluster0.ab1cd.mongodb.net/myDatabase?retryWrites=true&w=majority
+   */
+  DATABASE_URL: string
+
+  /**
+   * Jwt secret to encrypt tokens
+   *
+   * @example imcoihjc89hyva5sfx76gudd3d...
+   */
+  JWT_SECRET: string
 }
 
 const envSchema = Joi.object({
   PORT: Joi.number().required(),
-  SERVER: Joi.string().optional()
+  SERVER: Joi.string().optional(),
+
+  DATABASE_URL: Joi.string().required(),
+
+  JWT_SECRET: Joi.string().required()
 }).unknown(true)
 
 const { error, value } = envSchema.validate(process.env)
@@ -30,5 +48,9 @@ const envVars: EnvVars = value
 
 export const envs = {
   port: envVars.PORT,
-  server: envVars.SERVER
+  server: envVars.SERVER,
+
+  databaseUrl: envVars.DATABASE_URL,
+
+  jwtSecret: envVars.JWT_SECRET
 }
