@@ -10,13 +10,10 @@ import { Logger } from './logger.utils'
  * Gets the exception properties and creates a custom response and creates logs
  *
  * @param  {ServerResponse} res
- * @param  {ServiceException} exception
+ * @param  {ExceptionInterface} exception
  * @returns void
  */
-export const handlerException = (
-  res: ServerResponse,
-  exception: ServiceException
-): void => {
+export const handlerException = (res: ServerResponse, exception: any): void => {
   const logger = new Logger('HandlerException')
 
   const dataRespose: ResponseInterface<Object> = {
@@ -29,8 +26,17 @@ export const handlerException = (
     data: dataRespose,
   }
 
-  logger.error(exception.toString)
-  logger.error(exception.moreInfo)
+  if (exception instanceof ServiceException) {
+    logger.error(exception.toString)
+    logger.error(exception.moreInfo)
+  } else if (exception.code === 11000) {
+    const message = `Duplicate key ${JSON.stringify(exception.keyValue)}`
+
+    dataRespose.message = message
+    httpResponse.status = 400
+
+    logger.error(message)
+  }
 
   responseHttp<ResponseInterface<Object>>(res, httpResponse)
 }
