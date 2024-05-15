@@ -1,6 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http'
 
 import { handlerResponse } from '../../common/utils'
+import { userRouter } from './user.route'
+import { authRouter } from './auth.route'
 import { responseHttp } from '../http'
 import { envs } from '../../config'
 
@@ -33,6 +35,9 @@ const routes: Record<string, any> = {
 			data: { message: 'requested resource not found!' },
 		})
 	},
+
+	...userRouter,
+	...authRouter
 }
 
 export default routes
