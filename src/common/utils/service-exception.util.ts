@@ -8,10 +8,11 @@ import { ExceptionInterface } from '../interfaces/exception.interface'
 export class ServiceException extends Error {
 	private readonly data: Record<string, any>
 	readonly code: number
+	name: string
 
 	constructor({ name, message, code = 500, data = {} }: ExceptionInterface) {
-		super(name)
 		super(message)
+		this.name = name
 		this.code = code
 		this.data = data
 	}
