@@ -1,17 +1,19 @@
-import { IncomingMessage, ServerResponse } from "http";
+import { IncomingMessage, ServerResponse } from 'http'
 
-import { handlerException, handlerResponse } from "../common/utils";
-import { UserService } from './user.service';
-import { UserInterface } from "./interfaces";
+import { handlerException, handlerResponse } from '../common/utils'
+import { UserService } from './user.service'
+import { UserInterface } from './interfaces'
 
-const userService = new UserService()
+export class UserController {
+	private userService = new UserService()
 
-export const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
-  try {
-    const users = await userService.getAllUsers()
+	async getUsers(req: IncomingMessage, res: ServerResponse) {
+		try {
+			const users = await this.userService.getAllUsers()
 
-    handlerResponse<UserInterface[]>(res, users, 'Users found successful')
-  } catch (error) {
-    handlerException(res, error)
-  }
+			handlerResponse<UserInterface[]>(res, users, 'Users found successful')
+		} catch (error) {
+			handlerException(res, error)
+		}
+	}
 }

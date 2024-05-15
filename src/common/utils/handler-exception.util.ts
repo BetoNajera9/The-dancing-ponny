@@ -14,29 +14,29 @@ import { Logger } from './logger.utils'
  * @returns void
  */
 export const handlerException = (res: ServerResponse, exception: any): void => {
-  const logger = new Logger('HandlerException')
+	const logger = new Logger('HandlerException')
 
-  const dataRespose: ResponseInterface<Object> = {
-    success: false,
-    message: exception.message,
-  }
+	const dataRespose: ResponseInterface<Object> = {
+		success: false,
+		message: exception.message,
+	}
 
-  const httpResponse: ResponseHttpInterface<ResponseInterface<Object>> = {
-    status: exception.code,
-    data: dataRespose,
-  }
+	const httpResponse: ResponseHttpInterface<ResponseInterface<Object>> = {
+		status: exception.code,
+		data: dataRespose,
+	}
 
-  if (exception instanceof ServiceException) {
-    logger.error(exception.toString)
-    logger.error(exception.moreInfo)
-  } else if (exception.code === 11000) {
-    const message = `Duplicate key ${JSON.stringify(exception.keyValue)}`
+	if (exception instanceof ServiceException) {
+		logger.error(exception.toString)
+		logger.error(exception.moreInfo)
+	} else if (exception.code === 11000) {
+		const message = `Duplicate key ${JSON.stringify(exception.keyValue)}`
 
-    dataRespose.message = message
-    httpResponse.status = 400
+		dataRespose.message = message
+		httpResponse.status = 400
 
-    logger.error(message)
-  }
+		logger.error(message)
+	}
 
-  responseHttp<ResponseInterface<Object>>(res, httpResponse)
+	responseHttp<ResponseInterface<Object>>(res, httpResponse)
 }

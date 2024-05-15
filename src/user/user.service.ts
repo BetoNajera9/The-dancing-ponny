@@ -5,36 +5,36 @@ import { UserInterface } from './interfaces'
 import { UserModel } from './user.model'
 
 export class UserService {
-  private userModel: Model<UserInterface>
+	private userModel: Model<UserInterface>
 
-  constructor() {
-    this.userModel = UserModel
-  }
+	constructor() {
+		this.userModel = UserModel
+	}
 
-  async createUser(userInterface: UserInterface): Promise<UserInterface> {
-    const user = new UserModel(userInterface)
+	async createUser(userInterface: UserInterface): Promise<UserInterface> {
+		const user = new UserModel(userInterface)
 
-    await user.save()
+		await user.save()
 
-    return user
-  }
+		return user
+	}
 
-  async getUserByNickName(nickName: string): Promise<UserInterface> {
-    const user = this.userModel.findOne<UserInterface>({ nickName })
+	async getUserByNickName(nickName: string): Promise<UserInterface> {
+		const user = this.userModel.findOne<UserInterface>({ nickName })
 
-    if (!user)
-      throw new ServiceException({
-        name: 'NOT FOUND',
-        message: 'Not found user',
-        code: 404,
-      })
+		if (!user)
+			throw new ServiceException({
+				name: 'NOT FOUND',
+				message: 'Not found user',
+				code: 404,
+			})
 
-    return user
-  }
+		return user
+	}
 
-  async getAllUsers(): Promise<UserInterface[]> {
-    const users = this.userModel.find<UserInterface>()
+	async getAllUsers(): Promise<UserInterface[]> {
+		const users = this.userModel.find<UserInterface>()
 
-    return users
-  }
+		return users
+	}
 }
