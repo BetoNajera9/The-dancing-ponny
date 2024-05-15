@@ -14,4 +14,11 @@ export interface RequestHttpInterface extends IncomingMessage {
 	 * @example {limit: 5, offset: 0}
 	 */
 	query: Record<string, string | string[] | undefined>
+
+	/**
+	 * Body parameters
+	 *
+	 * @example {email: 'example@email.com, password: 'jenciuen'}
+	 */
+	body: Record<string, any>
 }

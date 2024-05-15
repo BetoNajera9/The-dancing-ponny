@@ -1,6 +1,11 @@
 import { IncomingMessage, ServerResponse } from 'http'
 
-export type RouteHandler = (req: IncomingMessage, res: ServerResponse) => void
+import { RequestHttpInterface } from './request-http.interface'
+
+export type RouteHandler = (
+	req: RequestHttpInterface,
+	res: ServerResponse
+) => void
 
 export interface RouterHttpInterface {
 	/**
@@ -15,7 +20,14 @@ export interface RouterHttpInterface {
 	 *
 	 * @example \/user\/:[^/]+
 	 */
-	path: RegExp
+	originalPath: string
+
+	/**
+	 * Route regex replacing params
+	 *
+	 * @example \/user\/:[^/]+
+	 */
+	regExpPath: RegExp
 
 	/**
 	 * The handler that will execute the request process
