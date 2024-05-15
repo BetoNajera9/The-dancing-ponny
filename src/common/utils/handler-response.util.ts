@@ -14,21 +14,21 @@ import { responseHttp } from '../../core/http'
  * @returns void
  */
 export const handlerResponse = <T>(
-  res: ServerResponse,
-  data: T,
-  message: string,
-  code: number = 200
+	res: ServerResponse,
+	data: T,
+	message: string,
+	code: number = 200
 ): void => {
-  const dataRespose: ResponseInterface<T> = {
-    success: true,
-    message,
-    data,
-  }
+	const dataRespose: ResponseInterface<T> = {
+		success: true,
+		message,
+		data,
+	}
 
-  const httpResponse: ResponseHttpInterface<ResponseInterface<T>> = {
-    status: code,
-    data: dataRespose,
-  }
+	const httpResponse: ResponseHttpInterface<ResponseInterface<T>> = {
+		status: code,
+		data: dataRespose,
+	}
 
-  responseHttp<ResponseInterface<T>>(res, httpResponse)
+	responseHttp<ResponseInterface<T>>(res, httpResponse)
 }

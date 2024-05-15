@@ -1,4 +1,4 @@
-import { ExceptionInterface } from "../interfaces/exception.interface"
+import { ExceptionInterface } from '../interfaces/exception.interface'
 
 /**
  * Customized service exception
@@ -6,21 +6,22 @@ import { ExceptionInterface } from "../interfaces/exception.interface"
  * @param  {ExceptionInterface} porperties - Exception properties for greater control
  */
 export class ServiceException extends Error {
-  private readonly data: Record<string, any>
-  readonly code: number
+	private readonly data: Record<string, any>
+	readonly code: number
+	name: string
 
-  constructor({ name, message, code = 500, data = {} }: ExceptionInterface) {
-    super(name)
-    super(message)
-    this.code = code
-    this.data = data
-  }
+	constructor({ name, message, code = 500, data = {} }: ExceptionInterface) {
+		super(message)
+		this.name = name
+		this.code = code
+		this.data = data
+	}
 
-  toString() {
-    return `${this.name} - ${this.message}`
-  }
+	toString() {
+		return `${this.name} - ${this.message}`
+	}
 
-  get moreInfo() {
-    return this.data
-  }
+	get moreInfo() {
+		return this.data
+	}
 }
