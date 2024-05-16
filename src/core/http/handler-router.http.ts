@@ -15,7 +15,7 @@ export class HandlerRouter {
 	private logger = new Logger('HandlerRouter')
 
 	public addRoute(method: string, path: string, handler: RouteHandler): void {
-		const pathRegex = new RegExp(`^${path.replace(/:[^/]+/g, '([^/]+)')}`)
+		const pathRegex = new RegExp(`^${path.replace(/:[^/]+/g, '([^/]+)')}$`)
 		method = method.toUpperCase()
 
 		this.routes.push({
@@ -63,7 +63,7 @@ export class HandlerRouter {
 				const paramsKeys =
 					requestedRoute.originalPath
 						.match(/:[^/]+/g)
-						.map((key) => key.substring(1)) || []
+						?.map((key) => key.substring(1)) || []
 				const dynamicParams =
 					requestedRoute.regExpPath.exec(path)?.slice(1) || []
 
