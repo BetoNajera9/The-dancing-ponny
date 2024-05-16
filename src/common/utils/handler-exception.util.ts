@@ -1,9 +1,10 @@
 import { ServerResponse } from 'http'
+import { Error } from 'mongoose'
 
-import { ResponseInterface } from '../interfaces/response.interface'
 import { ResponseHttpInterface } from '../../core/interfaces'
-import { responseHttp } from '../../core/http/response.http'
 import { ServiceException } from './service-exception.util'
+import { ResponseInterface } from '../interfaces'
+import { responseHttp } from '../../core/http'
 import { Logger } from './logger.utils'
 
 /**
@@ -27,8 +28,13 @@ export const handlerException = (res: ServerResponse, exception: any): void => {
 	}
 
 	if (exception instanceof ServiceException) {
-		logger.error(exception.toString)
+		logger.error(exception.toString())
 		logger.error(exception.moreInfo)
+	} else if (exception instanceof Error.CastError) {
+		dataRespose.message = `${exception.value} is not a valid ObjectId`
+		httpResponse.status = 400
+
+		logger.error(dataRespose.message)
 	} else if (exception.code === 11000) {
 		const message = `Duplicate key ${JSON.stringify(exception.keyValue)}`
 
