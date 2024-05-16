@@ -1,7 +1,7 @@
 import { ServerResponse } from 'http'
 
-import { ResponseInterface } from '../interfaces/response.interface'
 import { ResponseHttpInterface } from '../../core/interfaces'
+import { ResponseInterface } from '../interfaces'
 import { responseHttp } from '../../core/http'
 
 /**

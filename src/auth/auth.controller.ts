@@ -1,4 +1,4 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { ServerResponse } from 'http'
 
 import { handlerException, handlerResponse } from '../common/utils'
 import { RequestHttpInterface } from '../core/interfaces'
