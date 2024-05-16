@@ -1,5 +1,5 @@
-import { HandlerRouter } from '../core/http/handler-router.http'
 import { AuthController } from '../auth/auth.controller'
+import { HandlerRouter } from '../core/http'
 
 const router = new HandlerRouter()
 const authController = new AuthController()

@@ -1,11 +1,11 @@
 import jwt from 'jsonwebtoken'
 import * as Bcrypt from 'bcrypt'
 
-import { PayloadInterface } from './interfaces/payload.interface'
 import { UserService } from '../user/user.service'
 import { UserInterface } from '../user/interfaces'
 import { ServiceException } from '../common/utils'
 import { UserTokenInterface } from './interfaces'
+import { PayloadInterface } from './interfaces'
 import { envs } from '../config'
 
 export class AuthService {

@@ -1,4 +1,4 @@
-import { ExceptionInterface } from '../interfaces/exception.interface'
+import { ExceptionInterface } from '../interfaces'
 
 /**
  * Customized service exception
