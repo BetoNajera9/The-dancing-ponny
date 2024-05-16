@@ -4,10 +4,11 @@ import { handlerResponse } from '../common/utils'
 import { HandlerRouter } from '../core/http'
 import { envs } from '../config'
 
-import authRouter from './auth.router'
 import userRouter from './user.router'
+import authRouter from './auth.router'
+import dishRouter from './dish.router'
 
-const routers = [userRouter, authRouter]
+const routers = [userRouter, authRouter, dishRouter]
 
 const router = new HandlerRouter()
 
