@@ -19,8 +19,8 @@ export class UserService {
 		return user
 	}
 
-	async getUserByNickName(nickName: string): Promise<UserInterface> {
-		const user = this.userModel.findOne<UserInterface>({ nickName })
+	async getUserByNickName(nickName: string): Promise<UserInterface | null> {
+		const user = await this.userModel.findOne<UserInterface>({ nickName })
 
 		if (!user)
 			throw new ServiceException({
@@ -33,8 +33,6 @@ export class UserService {
 	}
 
 	async getAllUsers(): Promise<UserInterface[]> {
-		const users = this.userModel.find<UserInterface>()
-
-		return users
+		return await this.userModel.find<UserInterface>()
 	}
 }

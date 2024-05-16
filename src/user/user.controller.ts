@@ -1,13 +1,14 @@
-import { IncomingMessage, ServerResponse } from 'http'
+import { ServerResponse } from 'http'
 
 import { handlerException, handlerResponse } from '../common/utils'
+import { RequestHttpInterface } from '../core/interfaces'
 import { UserService } from './user.service'
 import { UserInterface } from './interfaces'
 
 export class UserController {
 	private userService = new UserService()
 
-	async getUsers(req: IncomingMessage, res: ServerResponse) {
+	async getUsers(req: RequestHttpInterface, res: ServerResponse) {
 		try {
 			const users = await this.userService.getAllUsers()
 
