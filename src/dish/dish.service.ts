@@ -1,6 +1,7 @@
 import { Model } from 'mongoose'
 
-import { ServiceException } from '../common/utils'
+import { handlerMeta, ServiceException } from '../common/utils'
+import { DataMetaInterface, PaginationInterface } from '../common/interfaces'
 import { DishInterface } from './interfaces'
 import { DishModel } from './dish.model'
 
@@ -19,8 +20,21 @@ export class DishService {
 		return dish
 	}
 
-	async getAllDishes(): Promise<DishInterface[]> {
-		return await this.dishModel.find<DishInterface>()
+	async getAllDishes(
+		{ page, take }: PaginationInterface,
+		search: string
+	): Promise<DataMetaInterface<DishInterface[]>> {
+		const dishes = await this.dishModel
+			.find<DishInterface>({ name: { $regex: search, $options: 'i' } })
+			.skip((page - 1) * take)
+			.limit(take)
+
+		const count = await this.dishModel.countDocuments({
+			name: { $regex: search, $options: 'i' },
+		})
+		const meta = handlerMeta({ page, take }, count)
+
+		return { data: dishes, meta }
 	}
 
 	async getDishDetail(id: string): Promise<DishInterface> {

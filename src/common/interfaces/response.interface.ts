@@ -1,3 +1,5 @@
+import { MetaInterface } from './meta.interface'
+
 export interface ResponseInterface<T> {
 	/**
 	 * Information if the request was successful
@@ -19,4 +21,11 @@ export interface ResponseInterface<T> {
 	 * @example {}
 	 */
 	data?: T
+
+	/**
+	 * Meta data
+	 *
+	 * @example MetaInterface
+	 */
+	meta?: MetaInterface
 }

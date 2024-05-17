@@ -1,17 +1,28 @@
 import { ServerResponse } from 'http'
 
+import { BodyValidator, QueryValidator } from '../common/decorators'
 import { handlerException, handlerResponse } from '../common/utils'
+import { PaginationSchema, SearchSchema } from '../common/schemas'
 import { CreateDishSchema, UpdateDishSchema } from './schemas'
+import { PaginationInterface } from '../common/interfaces'
 import { RequestHttpInterface } from '../core/interfaces'
-import { BodyValidator } from '../common/decorators'
 import { DishService } from './dish.service'
 import { DishInterface } from './interfaces'
 
 export class DishController {
+	@QueryValidator([PaginationSchema, SearchSchema])
 	async getAll(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
+			const pagination: PaginationInterface = {
+				page: +req.query.page,
+				take: +req.query.take,
+			}
+
 			const dishService = new DishService()
-			const dishes = await dishService.getAllDishes()
+			const dishes = await dishService.getAllDishes(
+				pagination,
+				`${req.query.search}`
+			)
 
 			handlerResponse<DishInterface[]>(res, dishes, 'Get all dishes succesful')
 		} catch (error) {

@@ -4,7 +4,7 @@ import Joi from 'joi'
 import { handlerException, ServiceException } from '../utils'
 import { RequestHttpInterface } from '../../core/interfaces'
 
-export const BodyValidator = (schema: Joi.ObjectSchema) => {
+export const QueryValidator = (schemas: Joi.ObjectSchema[]) => {
 	return (
 		target: any,
 		propertyName: string,
@@ -16,22 +16,27 @@ export const BodyValidator = (schema: Joi.ObjectSchema) => {
 			req: RequestHttpInterface,
 			res: ServerResponse
 		) => {
-			const body = req.body
+			const query = req.query
 
 			try {
-				const { error, value } = schema.validate(body)
-				req.body = value
+				for (const schema of schemas) {
+					const { error, value } = schema.validate(query)
+					if (error) {
+						throw new ServiceException({
+							name: 'BAD REQUEST',
+							message: `In the queries ${error.message}`,
+							code: 400,
+							data: error.details,
+						})
+					}
 
-				if (error) {
-					throw new ServiceException({
-						name: 'BAD REQUEST',
-						message: error.message,
-						code: 400,
-						data: error.details,
-					})
-				} else {
-					method.call(this, req, res)
+					req.query = {
+						...req.query,
+						...value,
+					}
 				}
+
+				method.call(this, req, res)
 			} catch (error) {
 				handlerException(res, error)
 			}

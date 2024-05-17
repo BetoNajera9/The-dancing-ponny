@@ -2,11 +2,11 @@ import { ServerResponse } from 'http'
 
 import { handlerException, handlerResponse } from '../common/utils'
 import { RequestHttpInterface } from '../core/interfaces'
+import { LoginSchema, SignUpSchema } from './schemas'
 import { BodyValidator } from '../common/decorators'
 import { UserInterface } from '../user/interfaces'
 import { UserTokenInterface } from './interfaces'
 import { AuthService } from './auth.service'
-import { LoginSchema } from './schemas'
 
 export class AuthController {
 	@BodyValidator(LoginSchema)
@@ -24,7 +24,7 @@ export class AuthController {
 		}
 	}
 
-	@BodyValidator(LoginSchema)
+	@BodyValidator(SignUpSchema)
 	async signUp(req: RequestHttpInterface, res: ServerResponse) {
 		try {
 			const authService = new AuthService()

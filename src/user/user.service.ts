@@ -1,6 +1,7 @@
 import { Model } from 'mongoose'
 
-import { ServiceException } from '../common/utils'
+import { DataMetaInterface, PaginationInterface } from '../common/interfaces'
+import { handlerMeta, ServiceException } from '../common/utils'
 import { UserInterface } from './interfaces'
 import { UserModel } from './user.model'
 
@@ -32,7 +33,18 @@ export class UserService {
 		return user
 	}
 
-	async getAllUsers(): Promise<UserInterface[]> {
-		return await this.userModel.find<UserInterface>()
+	async getAllUsers({
+		page,
+		take,
+	}: PaginationInterface): Promise<DataMetaInterface<UserInterface[]>> {
+		const users = await this.userModel
+			.find<UserInterface>()
+			.skip((page - 1) * take)
+			.limit(take)
+
+		const count = await this.userModel.estimatedDocumentCount()
+		const meta = handlerMeta({ page, take }, count)
+
+		return { data: users, meta }
 	}
 }
