@@ -1,6 +1,5 @@
 import { ServerResponse } from 'http'
 
-import { BodyValidator, QueryValidator } from '../common/decorators'
 import { handlerException, handlerResponse } from '../common/utils'
 import { PaginationSchema, SearchSchema } from '../common/schemas'
 import { CreateDishSchema, UpdateDishSchema } from './schemas'
@@ -8,8 +7,14 @@ import { PaginationInterface } from '../common/interfaces'
 import { RequestHttpInterface } from '../core/interfaces'
 import { DishService } from './dish.service'
 import { DishInterface } from './interfaces'
+import {
+	QueryValidator,
+	AuthValidator,
+	BodyValidator,
+} from '../common/decorators'
 
 export class DishController {
+	@AuthValidator
 	@QueryValidator([PaginationSchema, SearchSchema])
 	async getAll(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
@@ -30,6 +35,7 @@ export class DishController {
 		}
 	}
 
+	@AuthValidator
 	async getDishDetails(
 		req: RequestHttpInterface,
 		res: ServerResponse
@@ -49,6 +55,7 @@ export class DishController {
 		}
 	}
 
+	@AuthValidator
 	@BodyValidator(CreateDishSchema)
 	async create(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
@@ -62,6 +69,7 @@ export class DishController {
 		}
 	}
 
+	@AuthValidator
 	@BodyValidator(UpdateDishSchema)
 	async update(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
@@ -82,6 +90,7 @@ export class DishController {
 		}
 	}
 
+	@AuthValidator
 	async delete(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
 			const dishService = new DishService()
