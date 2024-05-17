@@ -1,8 +1,8 @@
 {
   "name": "the-dancing-ponny",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Your assignment is to implement a restaurant **REST API** using TypeScript, Node and no framework.",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
     "dev": "nodemon",
     "build": "rimraf ./dist && tsc",
