@@ -16,7 +16,7 @@ export class AuthService {
 	}
 
 	signToken(data: PayloadInterface) {
-		return jwt.sign(data, envs.jwtSecret)
+		return jwt.sign(data, envs.jwtSecret, { expiresIn: envs.jwtExpires })
 	}
 
 	async login(nickName: string, password: string): Promise<UserTokenInterface> {
