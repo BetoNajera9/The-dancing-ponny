@@ -19,7 +19,8 @@ export const BodyValidator = (schema: Joi.ObjectSchema) => {
 			const body = req.body
 
 			try {
-				const { error } = schema.validate(body)
+				const { error, value } = schema.validate(body)
+				req.body = value
 
 				if (error) {
 					throw new ServiceException({
