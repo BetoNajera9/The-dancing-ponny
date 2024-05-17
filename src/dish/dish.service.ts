@@ -1,8 +1,8 @@
 import { Model } from 'mongoose'
 
-import { handlerMeta, ServiceException } from '../common/utils'
 import { DataMetaInterface, PaginationInterface } from '../common/interfaces'
-import { DishInterface } from './interfaces'
+import { handlerMeta, ServiceException } from '../common/utils'
+import { DishInterface, RateInterface } from './interfaces'
 import { DishModel } from './dish.model'
 
 export class DishService {
@@ -80,5 +80,36 @@ export class DishService {
 			})
 
 		return dish
+	}
+
+	async rateDish(
+		dishId: string,
+		rateInterface: RateInterface
+	): Promise<RateInterface> {
+		const dish = await this.dishModel.findById(dishId)
+
+		if (!dish)
+			throw new ServiceException({
+				name: 'NOT FOUND',
+				message: 'Not found user',
+				code: 404,
+			})
+
+		const rate = dish.rate.find(
+			(element) => element.userId === rateInterface.userId
+		)
+
+		if (rate)
+			throw new ServiceException({
+				name: 'DUPLICATE RATE',
+				message: 'There is already a rate of the dish',
+				code: 409,
+			})
+
+		dish.rate.push(rateInterface)
+
+		await dish.save()
+
+		return rateInterface
 	}
 }

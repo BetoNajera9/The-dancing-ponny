@@ -1,12 +1,12 @@
 import { ServerResponse } from 'http'
 
+import { CreateDishSchema, RateDishSchema, UpdateDishSchema } from './schemas'
 import { handlerException, handlerResponse } from '../common/utils'
 import { PaginationSchema, SearchSchema } from '../common/schemas'
-import { CreateDishSchema, UpdateDishSchema } from './schemas'
+import { DishInterface, RateInterface } from './interfaces'
 import { PaginationInterface } from '../common/interfaces'
 import { RequestHttpInterface } from '../core/interfaces'
 import { DishService } from './dish.service'
-import { DishInterface } from './interfaces'
 import {
 	QueryValidator,
 	AuthValidator,
@@ -102,6 +102,25 @@ export class DishController {
 				dish,
 				`Delete dish successful with id ${req.params.id}`
 			)
+		} catch (error) {
+			handlerException(res, error)
+		}
+	}
+
+	@AuthValidator
+	@BodyValidator(RateDishSchema)
+	async rate(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
+		try {
+			const rateDish: RateInterface = {
+				userId: req.payload.userId,
+				stars: req.body.stars,
+				comments: req.body.comments,
+			}
+
+			const dishService = new DishService()
+			const dish = await dishService.rateDish(req.params.id, rateDish)
+
+			handlerResponse<RateInterface>(res, dish, `Rate dish successful`)
 		} catch (error) {
 			handlerException(res, error)
 		}

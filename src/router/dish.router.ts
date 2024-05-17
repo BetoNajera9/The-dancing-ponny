@@ -12,6 +12,11 @@ router.addRoute(
 )
 
 router.addRoute('POST', '/dish', dishController.create.bind(dishController))
+router.addRoute(
+	'POST',
+	'/dish/:id/rate',
+	dishController.rate.bind(dishController)
+)
 
 router.addRoute(
 	'PATCH',
