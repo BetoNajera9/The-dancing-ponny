@@ -42,6 +42,7 @@ export class HandlerRouter {
 	): Promise<void> {
 		const request = {
 			...req,
+			headers: req.headers,
 			query: {},
 		} as RequestHttpInterface
 
