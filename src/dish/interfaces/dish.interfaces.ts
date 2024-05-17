@@ -1,3 +1,5 @@
+import { RateInterface } from './rate.interface'
+
 export interface DishInterface {
 	/**
 	 * Name of the dish
@@ -26,4 +28,11 @@ export interface DishInterface {
 	 * @example 3
 	 */
 	price: number
+
+	/**
+	 * Array of RateInterface
+	 *
+	 * @example RateInterface[]
+	 */
+	rate: RateInterface[]
 }
