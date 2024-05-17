@@ -3,13 +3,18 @@ import { Model } from 'mongoose'
 import { DataMetaInterface, PaginationInterface } from '../common/interfaces'
 import { handlerMeta, ServiceException } from '../common/utils'
 import { DishInterface, RateInterface } from './interfaces'
+import { UserInterface } from '../user/interfaces'
+import { UserService } from '../user/user.service'
 import { DishModel } from './dish.model'
 
 export class DishService {
 	private dishModel: Model<DishInterface>
+	private userService: UserService
+	private blackList = ['smeagol']
 
 	constructor() {
 		this.dishModel = DishModel
+		this.userService = new UserService()
 	}
 
 	async createDish(dishInterface: DishInterface): Promise<DishInterface> {
@@ -86,17 +91,34 @@ export class DishService {
 		dishId: string,
 		rateInterface: RateInterface
 	): Promise<RateInterface> {
+		const blackUsers = await Promise.all(
+			this.blackList.map((user) => this.userService.getUserByNickName(user))
+		)
+
+		const userToRate = await this.userService.getUserById(rateInterface.userId)
+
+		const userBlocked = blackUsers.find(
+			(user: UserInterface) => user.nickName === userToRate.nickName
+		)
+
+		if (userBlocked)
+			throw new ServiceException({
+				name: 'BLOCK USER',
+				message: `User ${userToRate.nickName} blocked for rating`,
+				code: 403,
+			})
+
 		const dish = await this.dishModel.findById(dishId)
 
 		if (!dish)
 			throw new ServiceException({
 				name: 'NOT FOUND',
-				message: 'Not found user',
+				message: 'Not found dish',
 				code: 404,
 			})
 
 		const rate = dish.rate.find(
-			(element) => element.userId === rateInterface.userId
+			(element) => element.userId.toString() === rateInterface.userId
 		)
 
 		if (rate)

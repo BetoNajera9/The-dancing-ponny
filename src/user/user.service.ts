@@ -33,6 +33,19 @@ export class UserService {
 		return user
 	}
 
+	async getUserById(id: string): Promise<UserInterface | null> {
+		const user = await this.userModel.findById<UserInterface>(id)
+
+		if (!user)
+			throw new ServiceException({
+				name: 'NOT FOUND',
+				message: 'Not found user',
+				code: 404,
+			})
+
+		return user
+	}
+
 	async getAllUsers({
 		page,
 		take,
