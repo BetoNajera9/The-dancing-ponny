@@ -24,6 +24,14 @@ It is necessary to mention that the service needs [environment](.env.template) v
 
 For the database, we chose to use a local database by means of [docker compose](docker-compose.yml)
 
+A startup [file](./mongo-init.js) was created to generate the mongo db user and password.
+```
+user = BagginsOfBagEnd
+password = ShireSecrets42
+db name = the-dancing-ponny
+```
+
+
 To up the containers simply use the following command in the api folder
 
 ```shell
