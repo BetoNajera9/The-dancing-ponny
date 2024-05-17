@@ -11,7 +11,7 @@ new MongoLib()
 
 const rateLimiter = new RateLimiter(100, 60 * 60 * 1000)
 
-const server = http.createServer(
+export const server = http.createServer(
 	(req: http.IncomingMessage, res: http.ServerResponse) => {
 		if (rateLimiter.check(req, res)) Router.handleRequest(req, res)
 	}
