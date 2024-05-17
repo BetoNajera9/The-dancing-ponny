@@ -1,5 +1,12 @@
 import { MetaInterface, PaginationInterface } from '../interfaces'
 
+/**
+ * The MetaInterface object is generated
+ *
+ * @param  {PaginationInterface} pagination
+ * @param  {number} itemCount
+ * @returns MetaInterface
+ */
 export const handlerMeta = (
 	pagination: PaginationInterface,
 	itemCount: number

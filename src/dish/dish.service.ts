@@ -17,6 +17,10 @@ export class DishService {
 		this.userService = new UserService()
 	}
 
+	/**
+	 * @param  {DishInterface} dishInterface
+	 * @returns Promise<DishInterface>
+	 */
 	async createDish(dishInterface: DishInterface): Promise<DishInterface> {
 		const dish = new DishModel(dishInterface)
 
@@ -25,6 +29,12 @@ export class DishService {
 		return dish
 	}
 
+	/**
+	 * @param  {} {page
+	 * @param  {PaginationInterface} take}
+	 * @param  {string} search
+	 * @returns Promise<DataMetaInterface<DishInterface[]>>
+	 */
 	async getAllDishes(
 		{ page, take }: PaginationInterface,
 		search: string
@@ -42,6 +52,10 @@ export class DishService {
 		return { data: dishes, meta }
 	}
 
+	/**
+	 * @param  {string} id
+	 * @returns Promise<DishInterface>
+	 */
 	async getDishDetail(id: string): Promise<DishInterface> {
 		const dish = await this.dishModel.findById<DishInterface>(id)
 
@@ -55,6 +69,11 @@ export class DishService {
 		return dish
 	}
 
+	/**
+	 * @param  {string} id
+	 * @param  {DishInterface} dishInterface
+	 * @returns Promise<DishInterface>
+	 */
 	async updateDish(
 		id: string,
 		dishInterface: DishInterface
@@ -74,6 +93,10 @@ export class DishService {
 		return dish
 	}
 
+	/**
+	 * @param  {string} id
+	 * @returns Promise<DishInterface>
+	 */
 	async deleteDish(id: string): Promise<DishInterface> {
 		const dish = await this.dishModel.findByIdAndDelete<DishInterface>(id)
 
@@ -87,6 +110,11 @@ export class DishService {
 		return dish
 	}
 
+	/**
+	 * @param  {string} dishId
+	 * @param  {RateInterface} rateInterface
+	 * @returns Promise<RateInterface>
+	 */
 	async rateDish(
 		dishId: string,
 		rateInterface: RateInterface

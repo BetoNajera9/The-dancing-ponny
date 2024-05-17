@@ -9,8 +9,13 @@ import { UserTokenInterface } from './interfaces'
 import { AuthService } from './auth.service'
 
 export class AuthController {
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@BodyValidator(LoginSchema)
-	async login(req: RequestHttpInterface, res: ServerResponse) {
+	async login(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
 			const authService = new AuthService()
 
@@ -24,8 +29,13 @@ export class AuthController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@BodyValidator(SignUpSchema)
-	async signUp(req: RequestHttpInterface, res: ServerResponse) {
+	async signUp(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
 			const authService = new AuthService()
 

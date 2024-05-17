@@ -14,6 +14,11 @@ import {
 } from '../common/decorators'
 
 export class DishController {
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	@QueryValidator([PaginationSchema, SearchSchema])
 	async getAll(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
@@ -35,6 +40,11 @@ export class DishController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	async getDishDetails(
 		req: RequestHttpInterface,
@@ -55,6 +65,11 @@ export class DishController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	@BodyValidator(CreateDishSchema)
 	async create(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
@@ -69,6 +84,11 @@ export class DishController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	@BodyValidator(UpdateDishSchema)
 	async update(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
@@ -90,6 +110,11 @@ export class DishController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	async delete(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
 		try {
@@ -107,6 +132,11 @@ export class DishController {
 		}
 	}
 
+	/**
+	 * @param  {RequestHttpInterface} req
+	 * @param  {ServerResponse} res
+	 * @returns Promise
+	 */
 	@AuthValidator
 	@BodyValidator(RateDishSchema)
 	async rate(req: RequestHttpInterface, res: ServerResponse): Promise<void> {
