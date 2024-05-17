@@ -29,6 +29,13 @@ interface EnvVars {
 	 * @example imcoihjc89hyva5sfx76gudd3d...
 	 */
 	JWT_SECRET: string
+
+	/**
+	 * Time at which token expires, expressed in seconds or a string describing a time span [zeit/ms](https://github.com/zeit/ms.js)
+	 *
+	 * @example 1h
+	 */
+	JWT_EXPIRES: string
 }
 
 const envSchema = Joi.object({
@@ -38,6 +45,7 @@ const envSchema = Joi.object({
 	DATABASE_URL: Joi.string().required(),
 
 	JWT_SECRET: Joi.string().required(),
+	JWT_EXPIRES: Joi.string().required(),
 }).unknown(true)
 
 const { error, value } = envSchema.validate(process.env)
@@ -53,4 +61,5 @@ export const envs = {
 	databaseUrl: envVars.DATABASE_URL,
 
 	jwtSecret: envVars.JWT_SECRET,
+	jwtExpires: envVars.JWT_EXPIRES,
 }
