@@ -19,11 +19,4 @@ export interface RateInterface {
 	 * @example Peruvian ceviche is an explosion of flavor in every bite.
 	 */
 	comments: string
-
-	/**
-	 * timestamp when rate create
-	 *
-	 * @example 2024-05-17T06:12:14.838Z
-	 */
-	createdAt?: Date
 }
