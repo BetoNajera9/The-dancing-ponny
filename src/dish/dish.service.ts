@@ -62,7 +62,7 @@ export class DishService {
 		if (!dish)
 			throw new ServiceException({
 				name: 'NOT FOUND',
-				message: 'Not found user',
+				message: 'Not found dish',
 				code: 404,
 			})
 
@@ -86,7 +86,7 @@ export class DishService {
 		if (!dish)
 			throw new ServiceException({
 				name: 'NOT FOUND',
-				message: 'Not found user',
+				message: 'Not found dish',
 				code: 404,
 			})
 
@@ -103,7 +103,7 @@ export class DishService {
 		if (!dish)
 			throw new ServiceException({
 				name: 'NOT FOUND',
-				message: 'Not found user',
+				message: 'Not found dish',
 				code: 404,
 			})
 
